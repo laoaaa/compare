@@ -160,7 +160,7 @@ export default function Home() {
 
         <div className="text-center text-sm text-muted-foreground pt-8">
           <p>支持 Word (.docx) 和 TXT 格式导入 (PDF解析只能勉强用用)</p>
-          <p>繁转简没用到通用模型，所以是笨的 (无需联网)</p>
+          <p>繁转简没用到大语言模型，所以不会有幻觉 (缺点是“迴圈”会改“回圈”而非“循环”)</p>
         </div>
       </div>
     </div>
