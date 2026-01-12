@@ -84,8 +84,8 @@ export default function Home() {
     <div className="min-h-screen bg-background flex flex-col items-center py-12 px-4">
       <div className="max-w-4xl w-full space-y-8">
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-serif font-bold text-primary">文本比对的demo-v3</h1>
-          <p className="text-muted-foreground text-lg">2026.1.12</p>
+          <h1 className="text-4xl font-serif font-bold text-primary">文本比对-demo-v3</h1>
+          <p className="text-muted-foreground text-lg">2026.1.12更新</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -159,8 +159,8 @@ export default function Home() {
         </div>
 
         <div className="text-center text-sm text-muted-foreground pt-8">
-          <p>支持 Word (.docx), PDF, TXT 格式导入 (功能开发中)</p>
-          <p>内置本地化简繁智能转换引擎 (无需联网)</p>
+          <p>支持 Word (.docx) 和 TXT 格式导入 (PDF解析只能勉强用用)</p>
+          <p>繁转简没用到通用模型，所以是笨的 (无需联网)</p>
         </div>
       </div>
     </div>
