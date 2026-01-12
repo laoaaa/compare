@@ -21,16 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 修复点：先安装 pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      # 然后再配置 Node (此时 pnpm 已存在，缓存功能能正常工作)
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
 
       - name: Install dependencies
         run: pnpm install
