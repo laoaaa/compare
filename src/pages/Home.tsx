@@ -159,8 +159,8 @@ export default function Home() {
         </div>
 
         <div className="text-center text-sm text-muted-foreground pt-8">
-          <p>支持 Word (.docx) 和 TXT 格式导入 (PDF解析只能勉强用用)</p>
-          <p>繁转简没用到大语言模型，所以不会有幻觉 (缺点是“迴圈”会改“回圈”而非“循环”)</p>
+          <p>支持WORD、TXT格式导入(PDF还在优化，暂时只能勉强用用)</p>
+          <p>繁转简没用到大语言模型，缺点是“迴圈”会改“回圈”而非“循环”</p>
           <p>anygen也是老a</p>
         </div>
       </div>
