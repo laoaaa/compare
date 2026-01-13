@@ -16,6 +16,85 @@ export default function Result() {
   const [loading, setLoading] = useState(true);
   const [activeId, setActiveId] = useState<string | null>(null);
 
+  const handleExport = () => {
+    if (!result) return;
+    
+    // CSV Header
+    const headers = ['底本原句', '底本', '今本', '说明'];
+    const rows = [headers];
+
+    result.results.forEach(res => {
+      if (res.status === 'missing') {
+        rows.push([
+          `"${res.baseSentence.replace(/"/g, '""')}"`,
+          `"${res.baseSentence.replace(/"/g, '""')}"`,
+          '',
+          '脱句'
+        ]);
+      } else if (res.status === 'extra') {
+        rows.push([
+          '',
+          '',
+          `"${res.compareSentence.replace(/"/g, '""')}"`,
+          '衍句'
+        ]);
+      } else {
+        res.diffs.forEach(d => {
+            if (d.type !== 'equal') {
+                let baseText = '';
+                let compareText = '';
+                let desc = '';
+                
+                switch (d.type) {
+                    case 'delete':
+                        baseText = d.text;
+                        desc = '脱字';
+                        break;
+                    case 'insert':
+                        compareText = d.text;
+                        desc = '衍字';
+                        break;
+                    case 'substitute':
+                        baseText = d.originalText || '';
+                        compareText = d.text;
+                        desc = '讹误';
+                        break;
+                    case 'reorder':
+                        baseText = d.text;
+                        compareText = d.text;
+                        desc = '语序颠倒';
+                        break;
+                    case 'disorder':
+                        baseText = d.text;
+                        compareText = d.text;
+                        desc = '文意错乱';
+                        break;
+                }
+                
+                rows.push([
+                    `"${res.baseSentence.replace(/"/g, '""')}"`,
+                    `"${baseText.replace(/"/g, '""')}"`,
+                    `"${compareText.replace(/"/g, '""')}"`,
+                    desc
+                ]);
+            }
+        });
+      }
+    });
+
+    const csvContent = '\uFEFF' + rows.map(e => e.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `collation-report-${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast.success('校勘报告导出成功');
+  };
+
   useEffect(() => {
     const base = localStorage.getItem('collator_base');
     const compare = localStorage.getItem('collator_compare');
@@ -65,7 +144,7 @@ export default function Result() {
         <div className="flex items-center gap-2">
            <Tooltip>
              <TooltipTrigger asChild>
-               <Button variant="outline" size="icon">
+               <Button variant="outline" size="icon" onClick={handleExport}>
                  <Download className="w-4 h-4" />
                </Button>
              </TooltipTrigger>
