@@ -85,7 +85,7 @@ export default function Home() {
       <div className="max-w-4xl w-full space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-serif font-bold text-primary">文本比对-demo-v3</h1>
-          <p className="text-muted-foreground text-lg">2026.1.12更新</p>
+          <p className="text-muted-foreground text-lg">2026.1.13更新</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -161,6 +161,7 @@ export default function Home() {
         <div className="text-center text-sm text-muted-foreground pt-8">
           <p>支持 Word (.docx) 和 TXT 格式导入 (PDF解析只能勉强用用)</p>
           <p>繁转简没用到大语言模型，所以不会有幻觉 (缺点是“迴圈”会改“回圈”而非“循环”)</p>
+          <p>anygen也是老a</p>
         </div>
       </div>
     </div>
