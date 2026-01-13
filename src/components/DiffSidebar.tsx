@@ -90,8 +90,8 @@ export function DiffSidebar({ results, onCardClick, activeId }: DiffSidebarProps
       <div className="p-4 border-b bg-sidebar-accent/50 backdrop-blur">
         <h2 className="font-serif font-bold text-lg">校勘记 ({issues.length})</h2>
       </div>
-      <ScrollArea className="flex-1 p-4" ref={scrollRef}>
-        <div className="space-y-3">
+      <ScrollArea className="flex-1 min-h-0" ref={scrollRef}>
+        <div className="space-y-3 p-4">
           {issues.map((item) => (
             <Card 
               key={item.id} 
