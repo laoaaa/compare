@@ -29,7 +29,19 @@ export function DiffViewer({ data, role, onHighlightClick, activeId }: DiffViewe
         // If extra_sentence, show nothing in base (or show gap?).
         
         if (role === 'base') {
-           if (sentence.status === 'extra') return null; // Base doesn't have this
+           if (sentence.status === 'extra') {
+             return (
+               <span 
+                 key={sIdx}
+                 className="text-muted-foreground/30 select-none cursor-pointer hover:text-muted-foreground transition-colors"
+                 data-id={`diff-${sIdx}-extra`}
+                 onClick={() => onHighlightClick(`diff-${sIdx}-extra`)}
+                 title="此处有衍句"
+               >
+                 [衍句]
+               </span>
+             );
+           }
            if (sentence.status === 'missing') {
              // Missing in Compare = Text exists in Base, but not in Compare. 
              // In Base view, it's just normal text, maybe highlighted as "Will be Missing"?
@@ -49,7 +61,14 @@ export function DiffViewer({ data, role, onHighlightClick, activeId }: DiffViewe
         } else {
            // Role == compare
            if (sentence.status === 'missing') return (
-             <span key={sIdx} className="text-muted-foreground/30 select-none">[脱句]</span>
+             <span 
+              key={sIdx} 
+              className="text-muted-foreground/30 select-none cursor-pointer hover:text-muted-foreground transition-colors"
+              data-id={`diff-${sIdx}-missing`}
+              onClick={() => onHighlightClick(`diff-${sIdx}-missing`)}
+             >
+              [脱句]
+             </span>
            ); // Placeholder for alignment?
            if (sentence.status === 'extra') {
              return (
@@ -76,7 +95,19 @@ export function DiffViewer({ data, role, onHighlightClick, activeId }: DiffViewe
                const isActive = activeId === id;
 
                if (role === 'base') {
-                 if (diff.type === 'insert') return null; // Don't show insertions in base
+                 if (diff.type === 'insert') {
+                   return (
+                     <span 
+                       key={dIdx}
+                       className="text-muted-foreground/30 select-none cursor-pointer hover:text-muted-foreground transition-colors mx-0.5"
+                       data-id={id}
+                       onClick={() => onHighlightClick(id)}
+                       title="此处有衍字"
+                     >
+                       ▿
+                     </span>
+                   );
+                 }
                  if (diff.type === 'delete') {
                    return (
                      <Highlight 
@@ -105,7 +136,21 @@ export function DiffViewer({ data, role, onHighlightClick, activeId }: DiffViewe
                } 
                
                // Role: Compare
-               if (diff.type === 'delete') return null; // Don't show deletions in compare
+               if (diff.type === 'delete') {
+                 // For delete, we still want to show a placeholder in compare view to allow clicking
+                 // Usually represented as a small symbol or gap
+                 return (
+                   <span 
+                     key={dIdx}
+                     className="text-muted-foreground/30 select-none cursor-pointer hover:text-muted-foreground transition-colors mx-0.5"
+                     data-id={id}
+                     onClick={() => onHighlightClick(id)}
+                     title="此处有脱字"
+                   >
+                     ▿
+                   </span>
+                 );
+               }
                if (diff.type === 'insert') {
                  return (
                     <Highlight 
